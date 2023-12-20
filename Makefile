@@ -12,6 +12,12 @@ VENV_PYTHON = $(VENV_DIR)/bin/python3
 # Define project dependencies
 DEPENDENCIES = dependencies.txt
 
+# Define port to run application
+PORT ?= 5000
+
+# Default to 1 workers
+WORKERS ?= 1
+
 # Target: Install dev requirements
 requirements:
 	@echo "Installing requirements..."
@@ -33,10 +39,14 @@ install:
 uninstall:
 	@echo "Uninstalling $(dependency)..."
 	pip-autoremove $(dependency) -y
+	$(VENV_PYTHON) -m pip freeze > $(DEPENDENCIES)
 
 # Target: Run the Python project
 run:
-	$(PYTHON) src/app.py
+	uvicorn src.main:app --port $(PORT) --workers $(WORKERS) --log-level info
+
+dev:
+	uvicorn src.main:app --reload --host 0.0.0.0 --port $(PORT) --workers $(WORKERS) --log-level debug
 
 # Target: Clean up
 clean:
@@ -44,4 +54,4 @@ clean:
 	find . -name "*.pyc" -exec rm -f {} \;
 
 # Phony targets
-.PHONY: setup install uninstall run clean
+.PHONY: requirements setup install uninstall run dev clean
