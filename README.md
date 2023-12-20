@@ -2,10 +2,18 @@
 
 ## Requirements
 
-You can either install the requirements manually one by one or you can use the script to install it
-for you `make requirements`.
+You can either install the requirements manually one by one or you can use the following command to
+install all of it for you.
 
-* PyEnv `curl https://pyenv.run | bash`
+```bash
+make requirements`
+```
+
+### List of requirements
+
+* Python 3 `https://www.python.org/downloads/`
+* PyEnv `https://pyenv.run`
+* Pip-tools `https://github.com/jazzband/pip-tools`
 
 ## Commands
 
